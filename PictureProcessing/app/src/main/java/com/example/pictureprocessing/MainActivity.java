@@ -3,6 +3,7 @@ package com.example.pictureprocessing;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.pictureprocessing.Filters.PixelArtFilter;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -15,6 +16,7 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,8 +24,11 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -33,10 +38,11 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private Button photoSrcBtn;
     private ImageView imageView;
+    private Spinner spinner;
     private static final String IMAGE_DIRECTORY = "/tempImages";
     private int GALLERY = 1, CAMERA = 2;
 
@@ -50,12 +56,20 @@ public class MainActivity extends AppCompatActivity {
         photoSrcBtn = (Button) findViewById(R.id.photoSrcBtn);
         imageView = (ImageView) findViewById(R.id.imageView);
 
+        spinner = (Spinner) findViewById(R.id.spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.Filters, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
+
         photoSrcBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showPictureDialog();
             }
         });
+
+
     }
 
     private void showPictureDialog() {
@@ -165,5 +179,22 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .onSameThread().check();
 
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+        Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+        Bitmap result = bitmap.copy(Bitmap.Config.RGB_565, true);
+        switch(position){
+            case 1:
+                result = PixelArtFilter.PixelArtFilter(result);
+                break;
+        }
+        imageView.setImageBitmap(result);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+        return;
     }
 }
