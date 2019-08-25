@@ -5,5 +5,7 @@
         <item> None Selected </item>
         <item> Pixel Art Filter </item>
         <item> Blur Filter </item>
+        <item> InvertFilter </item>
+        <item> RotationFilter </item>
     </string-array>
 </resources>

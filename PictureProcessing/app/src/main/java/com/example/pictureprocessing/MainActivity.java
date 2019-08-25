@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pictureprocessing.Filters.BlurFilter;
+import com.example.pictureprocessing.Filters.InvertFilter;
 import com.example.pictureprocessing.Filters.PixelArtFilter;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -241,6 +242,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             case 2:
                 result = BlurFilter.BlurFilter(result);
                 break;
+            case 3:
+                result = InvertFilter.InvertFilter(result);
             default:
                 return;
         }
