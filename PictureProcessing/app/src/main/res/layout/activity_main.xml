@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="368dp"
-        android:layout_height="561dp"
+        android:layout_width="337dp"
+        android:layout_height="449dp"
         android:layout_marginStart="125dp"
         android:layout_marginLeft="125dp"
         android:layout_marginTop="24dp"
@@ -46,6 +46,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/photoSrcBtn" />
+
+    <Button
+        android:id="@+id/savePhotoBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="161dp"
+        android:layout_marginLeft="161dp"
+        android:layout_marginTop="34dp"
+        android:layout_marginEnd="162dp"
+        android:layout_marginRight="162dp"
+        android:text="Save Photo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

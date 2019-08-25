@@ -40,10 +40,14 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    //Creates instances of all the buttons in the design
     private Button photoSrcBtn;
+    private Button savePhotoBtn;
     private ImageView imageView;
     private Spinner spinner;
+    //Sets the name for the directory where the images will be saved
     private static final String IMAGE_DIRECTORY = "/tempImages";
+    //Codes for the source selection
     private int GALLERY = 1, CAMERA = 2;
 
     @Override
@@ -53,10 +57,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         requestMultiplePermissions();
 
+        //Assign the buttons from the design to the instances we created
         photoSrcBtn = (Button) findViewById(R.id.photoSrcBtn);
+        savePhotoBtn = (Button) findViewById(R.id.savePhotoBtn);
         imageView = (ImageView) findViewById(R.id.imageView);
 
+        //Assigned the spinner instance to the activity_main spinner
         spinner = (Spinner) findViewById(R.id.spinner);
+        //Assigns the drop down options by creating an array(Filters) and its items in string.xml
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.Filters, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinner.setAdapter(adapter);
@@ -69,13 +77,21 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
         });
 
-
+        savePhotoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveImage(((BitmapDrawable) imageView.getDrawable()).getBitmap());
+            }
+        });
     }
 
+    //Gives two options for selection an input image(gallery or camera)
     private void showPictureDialog() {
+        //Creates an alert dialog for selecting one of the two options for image source
         AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
         pictureDialog.setTitle("Select Action!");
         String[] pictureDialogItems = {"Select photo from gallery", "Take a photo from camera"};
+        //Calls a corresponding helper function based on the selected option
         pictureDialog.setItems(pictureDialogItems, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int option) {
@@ -92,15 +108,27 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         pictureDialog.show();
     }
 
+    //Function called when photo from gallery option selected
     private void choosePhotoFromGallery() {
+        /*Creates a new intention describing that we require to pick a photo from the internal storage
+          of the phone from the gallery and use that image later.
+
+          Makes use of the android provider to get a filepath to where the images are stored
+         */
         Intent galleryIntent = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
+        //Starts trying to get the user to pick the photo using the new intention and status code for gallery
         startActivityForResult(galleryIntent, GALLERY);
     }
 
+    //Function called when take a photo with camera option selected
     private void takePhotoFromCamera() {
+        /*Creates a new intention describing that we want to take a photo with the camera of the phone
+          and use the image later
+         */
         Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        //Starts trying to take the photo using the new intention and the status code for camera
         startActivityForResult(intent, CAMERA);
     }
 
@@ -113,11 +141,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
         if (requestCode == GALLERY) {
             if (intent != null) {
+                //Gets the filepath of an image from gallery
                 Uri contentURI = intent.getData();
                 try {
+                    //Gets the bitmap of a photo from gallery using the filepath
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentURI);
-                    saveImage(bitmap);
-                    Toast.makeText(MainActivity.this, "Image Saved!", Toast.LENGTH_SHORT).show();
                     imageView.setImageBitmap(bitmap);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -125,35 +153,43 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 }
             }
         } else if (requestCode == CAMERA) {
+            //Gets the bitmap from the taken photo and sets the imageView to it
             Bitmap bitmap = (Bitmap) intent.getExtras().get("data");
             imageView.setImageBitmap(bitmap);
-            saveImage(bitmap);
-            Toast.makeText(MainActivity.this, "Image Saved!", Toast.LENGTH_SHORT);
         }
     }
 
+    //Saves a photo in a directory of the phone using a given bitmap
     private void saveImage(Bitmap bitmap) {
+        //Compresses the given bitmap to a bytestream
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+        //Creates a file in the directory where the photos will be saved
         File wallpaperDirectory = new File(Environment.getExternalStorageDirectory() + IMAGE_DIRECTORY);
         if (!wallpaperDirectory.exists()) {
             wallpaperDirectory.mkdirs();
         }
 
         try {
-            File file = new File(wallpaperDirectory, Calendar.getInstance().getTimeInMillis() + ".jpg");
+            //Creates a file whose name is based on the current date and time and has extension .jpg
+            File file = new File(wallpaperDirectory, "IMG-" + Calendar.getInstance().getTimeInMillis() + ".jpg");
             file.createNewFile();
             FileOutputStream fo = new FileOutputStream(file);
+            //Uses the compressed bitmap and writes into the FileOutputStream
             fo.write(bytes.toByteArray());
+            //Scans the file and makes it visible in the phone media
             MediaScannerConnection.scanFile(this, new String[]{file.getPath()},
                     new String[]{"image/jpeg"}, null);
             fo.close();
+            //Adds to the log the information that we have saved the photo
             Log.d("TAG", "File Saved::---&gt;" + file.getAbsolutePath());
+            Toast.makeText(MainActivity.this, "Image Saved!", Toast.LENGTH_SHORT);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    //Requests the user for multiple permissions for accessing its gallery and camera
     private void requestMultiplePermissions() {
         Dexter.withActivity(this)
                 .withPermissions(Manifest.permission.CAMERA,
@@ -174,7 +210,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 withErrorListener(new PermissionRequestErrorListener() {
                     @Override
                     public void onError(DexterError error) {
-                        Toast.makeText(getApplicationContext(),"Some Erroe!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"Some Error!", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .onSameThread().check();
@@ -183,12 +219,27 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-        Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-        Bitmap result = bitmap.copy(Bitmap.Config.RGB_565, true);
+        Bitmap bitmap = null, result = null;
+        try{
+            bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+        } catch (Exception e) {
+            System.out.println("No photo source selected");
+            return;
+        }
+        try {
+            result = bitmap.copy(Bitmap.Config.RGB_565, true);
+        } catch (Exception e) {
+            System.out.println("No photo source selected");
+            return;
+        }
+        //Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+        //Bitmap result = bitmap.copy(Bitmap.Config.RGB_565, true);
         switch(position){
             case 1:
                 result = PixelArtFilter.PixelArtFilter(result);
                 break;
+            default:
+                return;
         }
         imageView.setImageBitmap(result);
     }
