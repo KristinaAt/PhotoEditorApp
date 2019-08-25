@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">PictureProcessing</string>
 
-    <string-array name = "Filters">
+    <string-array name="Filters">
         <item> None Selected</item>
         <item> Pixel Art Filter</item>
         <item> Blur Filter </item>
