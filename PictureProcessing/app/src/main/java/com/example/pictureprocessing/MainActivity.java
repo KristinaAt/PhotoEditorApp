@@ -3,6 +3,7 @@ package com.example.pictureprocessing;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.pictureprocessing.Filters.BlurFilter;
 import com.example.pictureprocessing.Filters.PixelArtFilter;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -232,11 +233,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             System.out.println("No photo source selected");
             return;
         }
-        //Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-        //Bitmap result = bitmap.copy(Bitmap.Config.RGB_565, true);
+
         switch(position){
             case 1:
                 result = PixelArtFilter.PixelArtFilter(result);
+                break;
+            case 2:
+                result = BlurFilter.BlurFilter(result);
                 break;
             default:
                 return;

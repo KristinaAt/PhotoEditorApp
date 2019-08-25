@@ -31,7 +31,7 @@ public class PixelArtFilter {
         int value;
         for (int j = y; j < (y + sqrSize); j++) {
             for (int i = x; i < (x + sqrSize); i++) {
-                if (isValidPixel(i, j, img.getWidth(), img.getHeight())) {
+                if (Utils.isValidPixel(i, j, img.getWidth(), img.getHeight())) {
                     int RGB = img.getPixel(i, j);
                     if (hashMap.containsKey(RGB)) {
                         value = hashMap.get(RGB);
@@ -57,7 +57,7 @@ public class PixelArtFilter {
 
         for (int j = y; j < (y + sqrSize); j++) {
             for (int i = x; i < (x + sqrSize); i++) {
-                if (isValidPixel(i, j, img.getWidth(), img.getHeight())) {
+                if (Utils.isValidPixel(i, j, img.getWidth(), img.getHeight())) {
                     img.setPixel(i, j, maxRGB);
                 } else {
                     break;
@@ -66,9 +66,7 @@ public class PixelArtFilter {
         }
 
     }
-    public static boolean isValidPixel(int x, int y, int width, int height) {
-        return ((x >= 0) && (x < width) && (y >= 0) && (y < height));
-    }
+
 }
 
 
