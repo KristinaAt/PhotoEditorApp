@@ -23,7 +23,7 @@ import java.io.IOException;
 public class AdjustBrightnessActivity extends AppCompatActivity {
 
     private Button photoSrcBtn;
-    private FloatingActionButton savePhotoActionBtn;
+    private FloatingActionButton savePhotoActionBtn, goBackBtn;
     private ImageView imageView;
     //Codes for the source selection
     private int GALLERY = 1, CAMERA = 2;
@@ -39,6 +39,7 @@ public class AdjustBrightnessActivity extends AppCompatActivity {
         //Assign the buttons from the design to the instances we created
         photoSrcBtn = (Button) findViewById(R.id.photoSrcBtn);
         savePhotoActionBtn = (FloatingActionButton) findViewById(R.id.savePhotoActionBtn);
+        goBackBtn = (FloatingActionButton) findViewById(R.id.goBackBtn);
         imageView = (ImageView) findViewById(R.id.imageView);
 
         photoSrcBtn.setOnClickListener(new View.OnClickListener() {
@@ -52,6 +53,14 @@ public class AdjustBrightnessActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 DefaultCommands.saveImage(((BitmapDrawable) imageView.getDrawable()).getBitmap(), activity);
+            }
+        });
+
+        goBackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(activity, MainActivity.class);
+                startActivity(intent);
             }
         });
     }

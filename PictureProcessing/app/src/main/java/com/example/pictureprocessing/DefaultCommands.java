@@ -73,9 +73,7 @@ public class DefaultCommands {
                 .withListener(new MultiplePermissionsListener() {
                     @Override
                     public void onPermissionsChecked(MultiplePermissionsReport report) {
-                        if (report.areAllPermissionsGranted()) {
-                            Toast.makeText(activity.getApplicationContext(), "All permissions are granted!", Toast.LENGTH_SHORT).show();
-                        }
+                        return;
                     }
 
                     @Override

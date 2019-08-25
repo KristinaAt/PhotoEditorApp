@@ -104,6 +104,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
                 } catch (Exception e){
                     System.out.println("No photo source selected");
+                    Toast.makeText(activity, "Please select a photo!", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -120,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
                 } catch (Exception e){
                     System.out.println("No photo source selected");
+                    Toast.makeText(activity, "Please select a photo!", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -137,12 +139,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
                 } catch (Exception e){
                     System.out.println("No photo source selected");
+                    Toast.makeText(activity, "Please select a photo!", Toast.LENGTH_SHORT).show();
                 }
 
                 try{
                     result = bitmap.copy(Bitmap.Config.RGB_565, true);
                 }catch (Exception e){
                     System.out.println("No photo source selected");
+                    return;
                 }
 
                 result = com.example.pictureprocessing.Filters.FlipFilter.FlipHorizontalFilter(result);
@@ -159,12 +163,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
                 } catch (Exception e){
                     System.out.println("No photo source selected");
+                    Toast.makeText(activity, "Please select a photo!", Toast.LENGTH_SHORT).show();
                 }
 
                 try{
                     result = bitmap.copy(Bitmap.Config.RGB_565, true);
                 }catch (Exception e){
                     System.out.println("No photo source selected");
+                    return;
                 }
 
                 result = com.example.pictureprocessing.Filters.FlipFilter.FlipVerticalFilter(result);
@@ -207,6 +213,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
         } catch (Exception e) {
             System.out.println("No photo source selected");
+            Toast.makeText(activity, "Please select a photo!", Toast.LENGTH_SHORT).show();
             return;
         }
         try {
@@ -230,7 +237,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 result = GreyscaleFilter.GreyscaleFilter(result);
                 break;
             case 5:
-                //TO DO
+                Intent intent = new Intent(this, AdjustBrightnessActivity.class);
+                startActivity(intent);
                 break;
             default:
                 return;
