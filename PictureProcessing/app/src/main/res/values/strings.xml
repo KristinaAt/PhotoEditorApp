@@ -7,6 +7,6 @@
         <item> Blur Filter </item>
         <item> Invert Filter</item>
         <item> Greyscale Filter</item>
-        <item>Flip Filter</item>
+        <item></item>
     </string-array>
 </resources>

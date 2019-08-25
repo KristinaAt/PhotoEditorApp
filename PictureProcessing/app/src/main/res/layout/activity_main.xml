@@ -19,7 +19,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:color/holo_blue_bright" />
+        android:background = "#68A9EFFC" />
 
     <Button
         android:id="@+id/photoSrcBtn"
@@ -78,11 +78,36 @@
         android:id="@+id/savePhotoActionBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="349dp"
+        android:layout_marginLeft="349dp"
+        android:layout_marginTop="8dp"
         android:clickable="true"
-        app:backgroundTint="#4D16D1"
-        app:srcCompat="@android:drawable/ic_menu_save"
-        tools:layout_editor_absoluteX="349dp"
-        tools:layout_editor_absoluteY="0dp" />
+        app:backgroundTint="#03A9F4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_save" />
+
+    <ImageButton
+        android:id="@+id/vertFlipBtn"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="29dp"
+        android:layout_marginLeft="29dp"
+        android:layout_marginTop="19dp"
+        app:layout_constraintStart_toEndOf="@+id/turnLeftBtn"
+        app:layout_constraintTop_toBottomOf="@+id/spinner"
+        app:srcCompat="@drawable/vertically" />
+
+    <ImageButton
+        android:id="@+id/horizFlipBtn"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="29dp"
+        android:layout_marginRight="29dp"
+        app:layout_constraintEnd_toStartOf="@+id/turnRightBtn"
+        app:layout_constraintTop_toBottomOf="@+id/spinner"
+        app:srcCompat="@drawable/horizontally" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

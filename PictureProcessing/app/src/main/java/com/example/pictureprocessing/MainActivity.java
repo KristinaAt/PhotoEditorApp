@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private FloatingActionButton savePhotoActionBtn;
     private ImageView imageView;
     private Spinner spinner;
-    private ImageButton turnLeftBtn, turnRightBtn;
+    private ImageButton turnLeftBtn, turnRightBtn, horizFlipBtn, vertFlipBtn;
     //Sets the name for the directory where the images will be saved
     private static final String IMAGE_DIRECTORY = "/tempImages";
     //Codes for the source selection
@@ -70,6 +70,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         imageView = (ImageView) findViewById(R.id.imageView);
         turnLeftBtn = (ImageButton) findViewById(R.id.turnLeftBtn);
         turnRightBtn = (ImageButton) findViewById(R.id.turnRightBtn);
+        horizFlipBtn = (ImageButton) findViewById(R.id.horizFlipBtn);
+        vertFlipBtn = (ImageButton) findViewById(R.id.vertFlipBtn);
 
         //Assigned the spinner instance to the activity_main spinner
         spinner = (Spinner) findViewById(R.id.spinner);
@@ -122,6 +124,50 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
                 bitmap = com.example.pictureprocessing.Filters.RotationFilter.RotateFilter(bitmap, 270);
                 imageView.setImageBitmap(bitmap);
+            }
+        });
+
+        horizFlipBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bitmap bitmap = null, result = null;
+
+                try{
+                    bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+                } catch (Exception e){
+                    System.out.println("No photo source selected");
+                }
+
+                try{
+                    result = bitmap.copy(Bitmap.Config.RGB_565, true);
+                }catch (Exception e){
+                    System.out.println("No photo source selected");
+                }
+
+                result = com.example.pictureprocessing.Filters.FlipFilter.FlipHorizontalFilter(result);
+                imageView.setImageBitmap(result);
+            }
+        });
+
+        vertFlipBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bitmap bitmap = null, result = null;
+
+                try{
+                    bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+                } catch (Exception e){
+                    System.out.println("No photo source selected");
+                }
+
+                try{
+                    result = bitmap.copy(Bitmap.Config.RGB_565, true);
+                }catch (Exception e){
+                    System.out.println("No photo source selected");
+                }
+
+                result = com.example.pictureprocessing.Filters.FlipFilter.FlipVerticalFilter(result);
+                imageView.setImageBitmap(result);
             }
         });
     }
