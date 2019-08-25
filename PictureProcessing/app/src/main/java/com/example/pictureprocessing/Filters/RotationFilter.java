@@ -2,8 +2,6 @@ package com.example.pictureprocessing.Filters;
 
 import android.graphics.Bitmap;
 
-//Fixing Github issues
-
 public class RotationFilter {
     /*Given an image the function rotates the image based on
     the rotate angle and calls a helper function for each of

@@ -4,8 +4,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pictureprocessing.Filters.BlurFilter;
+import com.example.pictureprocessing.Filters.GreyscaleFilter;
 import com.example.pictureprocessing.Filters.InvertFilter;
 import com.example.pictureprocessing.Filters.PixelArtFilter;
+import com.example.pictureprocessing.Filters.RotationFilter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -29,6 +32,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -44,9 +48,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     //Creates instances of all the buttons in the design
     private Button photoSrcBtn;
-    private Button savePhotoBtn;
+    private FloatingActionButton savePhotoActionBtn;
     private ImageView imageView;
     private Spinner spinner;
+    private ImageButton turnLeftBtn, turnRightBtn;
     //Sets the name for the directory where the images will be saved
     private static final String IMAGE_DIRECTORY = "/tempImages";
     //Codes for the source selection
@@ -61,8 +66,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         //Assign the buttons from the design to the instances we created
         photoSrcBtn = (Button) findViewById(R.id.photoSrcBtn);
-        savePhotoBtn = (Button) findViewById(R.id.savePhotoBtn);
+        savePhotoActionBtn = (FloatingActionButton) findViewById(R.id.savePhotoActionBtn);
         imageView = (ImageView) findViewById(R.id.imageView);
+        turnLeftBtn = (ImageButton) findViewById(R.id.turnLeftBtn);
+        turnRightBtn = (ImageButton) findViewById(R.id.turnRightBtn);
 
         //Assigned the spinner instance to the activity_main spinner
         spinner = (Spinner) findViewById(R.id.spinner);
@@ -79,10 +86,42 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
         });
 
-        savePhotoBtn.setOnClickListener(new View.OnClickListener() {
+        savePhotoActionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 saveImage(((BitmapDrawable) imageView.getDrawable()).getBitmap());
+            }
+        });
+
+        turnRightBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bitmap bitmap = null;
+                try {
+                    bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+                } catch (Exception e){
+                    System.out.println("No photo source selected");
+                    return;
+                }
+
+                bitmap = com.example.pictureprocessing.Filters.RotationFilter.RotateFilter(bitmap, 90);
+                imageView.setImageBitmap(bitmap);
+            }
+        });
+
+        turnLeftBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bitmap bitmap = null;
+                try {
+                    bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+                } catch (Exception e){
+                    System.out.println("No photo source selected");
+                    return;
+                }
+
+                bitmap = com.example.pictureprocessing.Filters.RotationFilter.RotateFilter(bitmap, 270);
+                imageView.setImageBitmap(bitmap);
             }
         });
     }
@@ -185,7 +224,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             fo.close();
             //Adds to the log the information that we have saved the photo
             Log.d("TAG", "File Saved::---&gt;" + file.getAbsolutePath());
-            Toast.makeText(MainActivity.this, "Image Saved!", Toast.LENGTH_SHORT);
+            Toast.makeText(MainActivity.this, "Image Saved!", Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -244,10 +283,21 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 break;
             case 3:
                 result = InvertFilter.InvertFilter(result);
+                break;
+            case 4:
+                result = GreyscaleFilter.GreyscaleFilter(result);
+                break;
+            case 5:
+                //TO DO
+                break;
             default:
                 return;
         }
         imageView.setImageBitmap(result);
+    }
+
+    private void chooseFlipOption(){
+
     }
 
     @Override

@@ -2,10 +2,11 @@
     <string name="app_name">PictureProcessing</string>
 
     <string-array name = "Filters">
-        <item> None Selected </item>
-        <item> Pixel Art Filter </item>
+        <item> None Selected</item>
+        <item> Pixel Art Filter</item>
         <item> Blur Filter </item>
-        <item> InvertFilter </item>
-        <item> RotationFilter </item>
+        <item> Invert Filter</item>
+        <item> Greyscale Filter</item>
+        <item>Flip Filter</item>
     </string-array>
 </resources>
