@@ -12,18 +12,27 @@ public class Utils {
     }
 
     public static void setR(int x, int y, int R, Bitmap img) {
+        if(R > 255){
+            R = 255;
+        }
         int RGB = img.getPixel(x, y) & 0x00ffff;
         RGB |= (R << 16);
         img.setPixel(x, y, RGB);
     }
 
     public static void setG(int x, int y, int G, Bitmap img) {
+        if(G > 255){
+            G = 255;
+        }
         int RGB = img.getPixel(x, y) & 0xff00ff;
         RGB |= (G << 8);
         img.setPixel(x, y, RGB);
     }
 
     public static void setB(int x, int y, int B, Bitmap img) {
+        if(B > 255){
+            B = 255;
+        }
         int RGB = img.getPixel(x, y) & 0xffff00;
         RGB |= B;
         img.setPixel(x, y, RGB);
