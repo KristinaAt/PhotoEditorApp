@@ -15,16 +15,16 @@ public class ColourFilter {
                         RedScalePixel(i, j, img);
                         break;
                     case 1:
-                        GreenScalePixel(i, j, img);
+                        OrangeScalePixel(i, j, img);
                         break;
                     case 2:
-                        BlueScalePixel(i, j, img);
-                        break;
-                    case 3:
                         YellowScalePixel(i, j, img);
                         break;
+                    case 3:
+                        GreenScalePixel(i, j, img);
+                        break;
                     case 4:
-                        OrangeScalePixel(i, j, img);
+                        BlueScalePixel(i, j, img);
                         break;
                     case 5:
                         PurpleScalePixel(i, j, img);
@@ -33,10 +33,10 @@ public class ColourFilter {
                         PinkScalePixel(i, j, img);
                         break;
                     case 7:
-                        LimeScalePixel(i, j, img);
+                        AquaScalePixel(i, j, img);
                         break;
                     case 8:
-                        AquaScalePixel(i, j, img);
+                        LimeScalePixel(i, j, img);
                         break;
                     case 9:
                         WarmScalePixel(i, j, img);

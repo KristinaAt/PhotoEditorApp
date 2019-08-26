@@ -252,9 +252,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 result = GreyscaleFilter.GreyscaleFilter(result);
                 break;
             case 5:
-                Intent intent = new Intent(this, AdjustBrightnessActivity.class);
-                DefaultCommands.addBitmapToIntent(intent, bitmap);
-                startActivity(intent);
+                Intent intentBrightness = new Intent(activity, AdjustBrightnessActivity.class);
+                DefaultCommands.addBitmapToIntent(intentBrightness, bitmap);
+                startActivity(intentBrightness);
+                return;
+            case 6:
+                Intent intentColourFilter = new Intent(activity, ColourScaleActivity.class);
+                DefaultCommands.addBitmapToIntent(intentColourFilter, bitmap);
+                startActivity(intentColourFilter);
                 return;
             default:
                 return;

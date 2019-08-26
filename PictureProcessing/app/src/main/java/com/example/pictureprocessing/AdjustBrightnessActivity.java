@@ -101,6 +101,7 @@ public class AdjustBrightnessActivity extends AppCompatActivity {
             }
         });
 
+        //Set the imageView of the current activity to the image from the main activity
         Bitmap bitmap = null;
         try{
             bitmap = DefaultCommands.getImageFromIntent(this.getIntent());
@@ -109,9 +110,6 @@ public class AdjustBrightnessActivity extends AppCompatActivity {
         } catch (Exception e){
             System.out.println("No photo found!");
         }
-
-
-
 
     }
 

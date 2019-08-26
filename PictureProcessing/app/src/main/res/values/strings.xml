@@ -8,5 +8,6 @@
         <item> Invert Filter</item>
         <item> Greyscale Filter</item>
         <item> Adjust Brightness Filter</item>
+        <item> Colour Filter</item>
     </string-array>
 </resources>
