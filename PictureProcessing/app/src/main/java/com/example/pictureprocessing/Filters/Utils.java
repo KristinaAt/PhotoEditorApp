@@ -5,12 +5,6 @@ import android.graphics.Bitmap;
 public class Utils {
 
     /* Below are methods to set the RGB values both in one go and as individual components */
-
-    public static void setRGB(int x, int y, long R, long G, long B, Bitmap img) {
-        long RGB = (R << 16) | (G << 8) | B;
-        img.setPixel(x, y, (int) RGB);
-    }
-
     public static void setR(int x, int y, int R, Bitmap img) {
         if(R > 255){
             R = 255;

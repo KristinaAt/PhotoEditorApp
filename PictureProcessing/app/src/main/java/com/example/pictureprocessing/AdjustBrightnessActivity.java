@@ -23,7 +23,6 @@ import java.io.IOException;
 
 public class AdjustBrightnessActivity extends AppCompatActivity {
 
-    private Button photoSrcBtn;
     private FloatingActionButton savePhotoActionBtn, goBackBtn;
     private ImageView imageView;
     private SeekBar brightScale;
@@ -40,7 +39,6 @@ public class AdjustBrightnessActivity extends AppCompatActivity {
         DefaultCommands.requestMultiplePermissions(this);
 
         //Assign the buttons from the design to the instances we created
-        photoSrcBtn = (Button) findViewById(R.id.photoSrcBtn);
         savePhotoActionBtn = (FloatingActionButton) findViewById(R.id.savePhotoActionBtn);
         goBackBtn = (FloatingActionButton) findViewById(R.id.goBackBtn);
         imageView = (ImageView) findViewById(R.id.imageView);
@@ -69,13 +67,6 @@ public class AdjustBrightnessActivity extends AppCompatActivity {
 
                 tempImage = com.example.pictureprocessing.Filters.AdjustBrightnessFilter.BrightnessFilter(tempImage, progress/50);
                 imageView.setImageBitmap(tempImage);
-            }
-        });
-
-        photoSrcBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DefaultCommands.showPictureDialog(activity, activity);
             }
         });
 
