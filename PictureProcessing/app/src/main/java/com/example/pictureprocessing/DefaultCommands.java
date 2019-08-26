@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaScannerConnection;
 import android.os.Environment;
 import android.util.Log;
@@ -136,5 +137,22 @@ public class DefaultCommands {
         Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         //Starts trying to take the photo using the new intention and the status code for camera
         activity.startActivityForResult(intent, CAMERA);
+    }
+
+    /*Given an intent and a bitmap the function adds the bitmap to the intent as an extra
+      so that we can pass a bitmap from the main activity to the new one
+     */
+    public static void addBitmapToIntent(Intent intent, Bitmap bitmap){
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        intent.putExtra("image", byteArray);
+    }
+
+    //Gets the extra named "image" from a given intent
+    public static Bitmap getImageFromIntent(Intent intent){
+        byte[] byteArray = intent.getByteArrayExtra("image");
+        Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+        return bitmap;
     }
 }

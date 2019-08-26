@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -25,9 +26,11 @@ public class AdjustBrightnessActivity extends AppCompatActivity {
     private Button photoSrcBtn;
     private FloatingActionButton savePhotoActionBtn, goBackBtn;
     private ImageView imageView;
+    private SeekBar brightScale;
     //Codes for the source selection
     private int GALLERY = 1, CAMERA = 2;
     private Activity activity = this;
+    private Bitmap image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,33 @@ public class AdjustBrightnessActivity extends AppCompatActivity {
         savePhotoActionBtn = (FloatingActionButton) findViewById(R.id.savePhotoActionBtn);
         goBackBtn = (FloatingActionButton) findViewById(R.id.goBackBtn);
         imageView = (ImageView) findViewById(R.id.imageView);
+        brightScale = (SeekBar) findViewById(R.id.brightScale);
+        brightScale.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                Bitmap tempImage = null;
+                double progress = seekBar.getProgress();
+                try{
+                    tempImage = image.copy(Bitmap.Config.RGB_565, true);
+                } catch (Exception e){
+                    System.out.println("No photo selected");
+                    return;
+                }
+
+                tempImage = com.example.pictureprocessing.Filters.AdjustBrightnessFilter.BrightnessFilter(tempImage, progress/50);
+                imageView.setImageBitmap(tempImage);
+            }
+        });
 
         photoSrcBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,9 +90,29 @@ public class AdjustBrightnessActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(activity, MainActivity.class);
+                Bitmap bitmap = null;
+                try{
+                    bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+                } catch (Exception e){
+                    System.out.println("No photo selected");
+                }
+                DefaultCommands.addBitmapToIntent(intent, bitmap);
                 startActivity(intent);
             }
         });
+
+        Bitmap bitmap = null;
+        try{
+            bitmap = DefaultCommands.getImageFromIntent(this.getIntent());
+            image = bitmap;
+            imageView.setImageBitmap(bitmap);
+        } catch (Exception e){
+            System.out.println("No photo found!");
+        }
+
+
+
+
     }
 
     @Override

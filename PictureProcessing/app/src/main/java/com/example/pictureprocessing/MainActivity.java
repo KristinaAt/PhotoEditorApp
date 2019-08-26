@@ -177,6 +177,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 imageView.setImageBitmap(result);
             }
         });
+
+        Bitmap bitmap = null;
+        try{
+            bitmap = DefaultCommands.getImageFromIntent(this.getIntent());
+            imageView.setImageBitmap(bitmap);
+        } catch (Exception e){
+            System.out.println("No photo selected");
+        }
     }
 
     @Override
@@ -238,16 +246,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 break;
             case 5:
                 Intent intent = new Intent(this, AdjustBrightnessActivity.class);
+                DefaultCommands.addBitmapToIntent(intent, bitmap);
                 startActivity(intent);
-                break;
+                return;
             default:
                 return;
         }
         imageView.setImageBitmap(result);
-    }
-
-    private void chooseFlipOption(){
-
     }
 
     @Override
