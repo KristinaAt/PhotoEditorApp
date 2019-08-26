@@ -49,7 +49,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     //Creates instances of all the buttons in the design
-    private Button photoSrcBtn;
+    private Button photoSrcBtn, applyFilter;
     private FloatingActionButton savePhotoActionBtn;
     private ImageView imageView;
     private Spinner spinner;
@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         //Assign the buttons from the design to the instances we created
         photoSrcBtn = (Button) findViewById(R.id.photoSrcBtn);
+        applyFilter = (Button) findViewById(R.id.applyFilterBtn);
         savePhotoActionBtn = (FloatingActionButton) findViewById(R.id.savePhotoActionBtn);
         imageView = (ImageView) findViewById(R.id.imageView);
         turnLeftBtn = (ImageButton) findViewById(R.id.turnLeftBtn);
@@ -86,6 +87,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             @Override
             public void onClick(View view) {
                 DefaultCommands.showPictureDialog(activity, activity);
+            }
+        });
+
+        applyFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                applyFilter(spinner.getSelectedItemPosition());
             }
         });
 
@@ -214,8 +222,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+    public void applyFilter(int position) {
         Bitmap bitmap = null, result = null;
         try{
             bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
@@ -253,6 +260,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 return;
         }
         imageView.setImageBitmap(result);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View v, int position, long id){
+        return;
     }
 
     @Override
