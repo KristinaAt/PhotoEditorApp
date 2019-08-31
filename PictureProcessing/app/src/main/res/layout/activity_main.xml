@@ -33,7 +33,7 @@
         android:background = "#68A9EFFC" />
 
     <Button
-        android:id="@+id/photoSrcBtn"
+        android:id="@+id/blendWithBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -54,7 +54,7 @@
         android:layout_marginRight="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/photoSrcBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/blendWithBtn" />
 
     <ImageButton
         android:id="@+id/turnLeftBtn"

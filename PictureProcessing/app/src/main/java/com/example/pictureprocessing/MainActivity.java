@@ -1,35 +1,20 @@
 package com.example.pictureprocessing;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pictureprocessing.Filters.BlurFilter;
 import com.example.pictureprocessing.Filters.GreyscaleFilter;
 import com.example.pictureprocessing.Filters.InvertFilter;
 import com.example.pictureprocessing.Filters.PixelArtFilter;
-import com.example.pictureprocessing.Filters.RotationFilter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.MultiplePermissionsReport;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.DexterError;
-import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.PermissionRequestErrorListener;
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
-import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -39,12 +24,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -66,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         DefaultCommands.requestMultiplePermissions(this);
 
         //Assign the buttons from the design to the instances we created
-        photoSrcBtn = (Button) findViewById(R.id.photoSrcBtn);
+        photoSrcBtn = (Button) findViewById(R.id.blendWithBtn);
         applyFilter = (Button) findViewById(R.id.applyFilterBtn);
         savePhotoActionBtn = (FloatingActionButton) findViewById(R.id.savePhotoActionBtn);
         imageView = (ImageView) findViewById(R.id.imageView);
@@ -260,6 +240,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 Intent intentColourFilter = new Intent(activity, ColourScaleActivity.class);
                 DefaultCommands.addBitmapToIntent(intentColourFilter, bitmap);
                 startActivity(intentColourFilter);
+                return;
+            case 7:
+                Intent intentBlendFilter = new Intent(activity, BlendFilter.class);
+                DefaultCommands.addBitmapToIntent(intentBlendFilter, bitmap);
+                startActivity(intentBlendFilter);
                 return;
             default:
                 return;
