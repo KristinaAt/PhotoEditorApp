@@ -20,10 +20,11 @@ public class BrightnessContrastActivity extends AppCompatActivity {
     private FloatingActionButton savePhotoActionBtn, goBackBtn;
     private ImageView imageView;
     private SeekBar brightScale, contrastScale;
-    //Codes for the source selection
-    private int GALLERY = 1, CAMERA = 2;
     private Activity activity = this;
     private Bitmap image;
+    //Constants for dealing with magic numbers
+    private int PROGRESS_DIVIDE_CONST = 50;
+    private int PROGRESS_SUBTRACT_CONST = 255;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +61,7 @@ public class BrightnessContrastActivity extends AppCompatActivity {
                     System.out.println("No photo selected");
                     return;
                 }
-                tempImage = com.example.pictureprocessing.Filters.AdjustBrightnessFilter.BrightnessFilter(tempImage, progress / 50);
+                tempImage = com.example.pictureprocessing.Filters.AdjustBrightnessFilter.BrightnessFilter(tempImage, progress / PROGRESS_DIVIDE_CONST);
                 imageView.setImageBitmap(tempImage);
             }
         });
@@ -80,7 +81,7 @@ public class BrightnessContrastActivity extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
                 Bitmap tempImage = null;
                 //Converts the progress into a number in the range [-255, 255]
-                int progress = seekBar.getProgress() - 255;
+                int progress = seekBar.getProgress() - PROGRESS_SUBTRACT_CONST;
                 //Try catch block for copying the bitmap from the imageView
                 try {
                     tempImage = image.copy(Bitmap.Config.RGB_565, true);

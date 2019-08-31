@@ -35,12 +35,14 @@ public class DefaultCommands {
     private static int GALLERY = 1, CAMERA = 2;
     //Sets the name for the directory where the images will be saved
     private static final String IMAGE_DIRECTORY = "/tempImages";
+    //Constants for dealing with magic numbers
+    private static int QUALITY = 100;
 
     //Saves a photo in a directory of the phone using a given bitmap
     public static void saveImage(Bitmap bitmap, Context context) {
         //Compresses the given bitmap to a bytestream
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, QUALITY, bytes);
         //Creates a file in the directory where the photos will be saved
         File wallpaperDirectory = new File(Environment.getExternalStorageDirectory() + IMAGE_DIRECTORY);
         if (!wallpaperDirectory.exists()) {
@@ -144,7 +146,7 @@ public class DefaultCommands {
      */
     public static void addBitmapToIntent(Intent intent, Bitmap bitmap){
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, QUALITY, stream);
         byte[] byteArray = stream.toByteArray();
         intent.putExtra("image", byteArray);
     }

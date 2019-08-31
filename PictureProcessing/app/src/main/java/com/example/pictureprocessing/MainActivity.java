@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private ImageButton turnLeftBtn, turnRightBtn, horizFlipBtn, vertFlipBtn;
     //Codes for the source selection
     private int GALLERY = 1, CAMERA = 2;
+    //Constants for dealing with magic numbers
+    private int ROTATE_LEFT_ANGLE = 270, ROTATE_RIGHT_ANGLE = 90;
     private Activity activity = this;
 
     @Override
@@ -105,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     return;
                 }
 
-                bitmap = com.example.pictureprocessing.Filters.RotationFilter.RotateFilter(bitmap, 90);
+                bitmap = com.example.pictureprocessing.Filters.RotationFilter.RotateFilter(bitmap, ROTATE_RIGHT_ANGLE);
                 imageView.setImageBitmap(bitmap);
             }
         });
@@ -124,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     return;
                 }
 
-                bitmap = com.example.pictureprocessing.Filters.RotationFilter.RotateFilter(bitmap, 270);
+                bitmap = com.example.pictureprocessing.Filters.RotationFilter.RotateFilter(bitmap, ROTATE_LEFT_ANGLE);
                 imageView.setImageBitmap(bitmap);
             }
         });
