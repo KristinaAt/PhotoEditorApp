@@ -47,7 +47,9 @@ public class BlurFilter {
         for (int j = y; j < (y + sqrSize); j++) {
             for (int i = x; i < (x + sqrSize); i++) {
                 if (Utils.isValidPixel(i, j, width, height)) {
-                    Utils.setRGB(i, j, RGB[0], RGB[1], RGB[2], img);
+                    Utils.setR(i, j, RGB[0], img);
+                    Utils.setG(i, j, RGB[1], img);
+                    Utils.setB(i, j, RGB[2], img);
                 } else {
                     break;
                 }
