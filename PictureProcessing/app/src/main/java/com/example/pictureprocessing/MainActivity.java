@@ -232,7 +232,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 result = GreyscaleFilter.GreyscaleFilter(result);
                 break;
             case 5:
-                Intent intentBrightness = new Intent(activity, AdjustBrightnessActivity.class);
+                Intent intentBrightness = new Intent(activity, BrightnessContrastActivity.class);
                 DefaultCommands.addBitmapToIntent(intentBrightness, bitmap);
                 startActivity(intentBrightness);
                 return;
@@ -242,7 +242,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 startActivity(intentColourFilter);
                 return;
             case 7:
-                Intent intentBlendFilter = new Intent(activity, BlendFilter.class);
+                Intent intentBlendFilter = new Intent(activity, BlendFilterActivity.class);
                 DefaultCommands.addBitmapToIntent(intentBlendFilter, bitmap);
                 startActivity(intentBlendFilter);
                 return;

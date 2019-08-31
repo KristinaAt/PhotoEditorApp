@@ -8,11 +8,12 @@
 
     <Button
         android:id="@+id/applyFilterBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
+        android:background="#DFF8F5F8"
         android:text="Apply Filter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
@@ -34,11 +35,12 @@
 
     <Button
         android:id="@+id/blendWithBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
         android:layout_marginTop="20dp"
+        android:background="#DFF8F5F8"
         android:text="Photo Source"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
@@ -102,6 +104,8 @@
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
         android:layout_marginTop="19dp"
+        android:layout_marginBottom="52dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/turnLeftBtn"
         app:layout_constraintTop_toBottomOf="@+id/spinner"
         app:srcCompat="@drawable/vertically" />
@@ -113,6 +117,8 @@
         android:layout_marginTop="19dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
+        android:layout_marginBottom="52dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/turnRightBtn"
         app:layout_constraintTop_toBottomOf="@+id/spinner"
         app:srcCompat="@drawable/horizontally" />
