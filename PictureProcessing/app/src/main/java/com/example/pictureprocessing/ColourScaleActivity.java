@@ -14,24 +14,25 @@ import android.widget.ImageView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class ColourScaleActivity extends AppCompatActivity implements View.OnClickListener {
-
+    //Creates instances of all the buttons and image view in the design
     private FloatingActionButton savePhotoActionBtn, goBackBtn;
     private ImageView imageView;
     private Button redBtn, orangeBtn, yellowBtn, greenBtn, blueBtn,
-            purpleBtn, pinkBtn, aquaBtn, clearBtn;
-
+                   purpleBtn, pinkBtn, aquaBtn, clearBtn;
     private Bitmap image;
     private Activity activity = this;
 
     @Override
     public void onClick(View view) {
         Bitmap tempImage = null;
+        //Try catch block for copying the bitmap from the imageView
         try {
             tempImage = image.copy(Bitmap.Config.RGB_565, true);
         } catch (Exception e) {
             System.out.println("No photo selected");
             return;
         }
+        //Calls the ColourFilter function based on the pressed coloured button
         switch (view.getId()) {
             case R.id.redBtn:
                 tempImage = com.example.pictureprocessing.Filters.ColourFilter.ScaleFilter(tempImage, 0);
@@ -96,6 +97,9 @@ public class ColourScaleActivity extends AppCompatActivity implements View.OnCli
         goBackBtn = (FloatingActionButton) findViewById(R.id.goBackBtn);
         imageView = (ImageView) findViewById(R.id.imageView);
 
+        /*Calls a helper function that saves a photo in a directory
+        of the phone using a given bitmap
+        */
         savePhotoActionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,11 +107,13 @@ public class ColourScaleActivity extends AppCompatActivity implements View.OnCli
             }
         });
 
+        //When the button is clicked the program goes to the main activity
         goBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(activity, MainActivity.class);
                 Bitmap bitmap = null;
+                //Try catch block for getting the bitmap from the imageView
                 try {
                     bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
                 } catch (Exception e) {

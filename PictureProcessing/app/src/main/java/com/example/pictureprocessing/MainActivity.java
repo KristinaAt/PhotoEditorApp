@@ -28,7 +28,7 @@ import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    //Creates instances of all the buttons in the design
+    //Creates instances of all the buttons, image view and the spinner in the design
     private Button photoSrcBtn, applyFilter;
     private FloatingActionButton savePhotoActionBtn;
     private ImageView imageView;
@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
+        //When the button is clicked a picture dialog with two photo source options is shown
         photoSrcBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,6 +71,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
         });
 
+        /*When pressed the button calls a helper function that processes
+        the image based on the selected filter
+         */
         applyFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,6 +81,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
         });
 
+        /*Calls a helper function that saves a photo in a directory
+        of the phone using a given bitmap
+        */
         savePhotoActionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,13 +91,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
         });
 
+        //When the button is pressed the image is rotated to the right
         turnRightBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Bitmap bitmap = null;
+                //Try catch block for getting the bitmap from the imageView
                 try {
                     bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-                } catch (Exception e){
+                } catch (Exception e) {
                     System.out.println("No photo source selected");
                     Toast.makeText(activity, "Please select a photo!", Toast.LENGTH_SHORT).show();
                     return;
@@ -101,13 +110,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
         });
 
+        //When the button is pressed the image is rotated to the left
         turnLeftBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Bitmap bitmap = null;
+                //Try catch block for getting the bitmap from the imageView
                 try {
                     bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-                } catch (Exception e){
+                } catch (Exception e) {
                     System.out.println("No photo source selected");
                     Toast.makeText(activity, "Please select a photo!", Toast.LENGTH_SHORT).show();
                     return;
@@ -118,21 +129,22 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
         });
 
+        //When the button is pressed the image is flipped horizontally
         horizFlipBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Bitmap bitmap = null, result = null;
-
-                try{
-                    bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
-                } catch (Exception e){
+                //Try catch block for getting the bitmap from the imageView
+                try {
+                    bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+                } catch (Exception e) {
                     System.out.println("No photo source selected");
                     Toast.makeText(activity, "Please select a photo!", Toast.LENGTH_SHORT).show();
                 }
-
-                try{
+                //Try catch block for copying the bitmap from the imageView
+                try {
                     result = bitmap.copy(Bitmap.Config.RGB_565, true);
-                }catch (Exception e){
+                } catch (Exception e) {
                     System.out.println("No photo source selected");
                     return;
                 }
@@ -142,21 +154,22 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
         });
 
+        //When the button is pressed the image is flipped vertically
         vertFlipBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Bitmap bitmap = null, result = null;
-
-                try{
-                    bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
-                } catch (Exception e){
+                //Try catch block for getting the bitmap from the imageView
+                try {
+                    bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+                } catch (Exception e) {
                     System.out.println("No photo source selected");
                     Toast.makeText(activity, "Please select a photo!", Toast.LENGTH_SHORT).show();
                 }
-
-                try{
+                //Try catch block for copying the bitmap from the imageView
+                try {
                     result = bitmap.copy(Bitmap.Config.RGB_565, true);
-                }catch (Exception e){
+                } catch (Exception e) {
                     System.out.println("No photo source selected");
                     return;
                 }
@@ -166,15 +179,19 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
         });
 
+        /*Gets the image extra from the intent and sets the imageView to it so that when
+         we return to the main activity we will have the imageView set to the filtered image
+          */
         Bitmap bitmap = null;
-        try{
+        try {
             bitmap = DefaultCommands.getImageFromIntent(this.getIntent());
             imageView.setImageBitmap(bitmap);
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println("No photo selected");
         }
     }
 
+    //Based on the result code it gets a bitmap and sets the imageView
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
@@ -204,21 +221,23 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     public void applyFilter(int position) {
         Bitmap bitmap = null, result = null;
-        try{
+        //Try catch block for getting the bitmap from the imageView
+        try {
             bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
         } catch (Exception e) {
             System.out.println("No photo source selected");
             Toast.makeText(activity, "Please select a photo!", Toast.LENGTH_SHORT).show();
             return;
         }
+        //Try catch block for copying the bitmap from the imageView
         try {
             result = bitmap.copy(Bitmap.Config.RGB_565, true);
         } catch (Exception e) {
             System.out.println("No photo source selected");
             return;
         }
-
-        switch(position){
+        //Switch case for filtering the image base on the option selected from the drop down menu
+        switch (position) {
             case 1:
                 result = PixelArtFilter.PixelArtFilter(result);
                 break;
@@ -232,16 +251,19 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 result = GreyscaleFilter.GreyscaleFilter(result);
                 break;
             case 5:
+                //Adds the image which is to be filtered to the BrightnessContrastActivity intent
                 Intent intentBrightness = new Intent(activity, BrightnessContrastActivity.class);
                 DefaultCommands.addBitmapToIntent(intentBrightness, bitmap);
                 startActivity(intentBrightness);
                 return;
             case 6:
+                //Adds the image which is to be filtered to the ColourScaleActivity intent
                 Intent intentColourFilter = new Intent(activity, ColourScaleActivity.class);
                 DefaultCommands.addBitmapToIntent(intentColourFilter, bitmap);
                 startActivity(intentColourFilter);
                 return;
             case 7:
+                //Adds the image which is to be filtered to the BlendFilterActivity intent
                 Intent intentBlendFilter = new Intent(activity, BlendFilterActivity.class);
                 DefaultCommands.addBitmapToIntent(intentBlendFilter, bitmap);
                 startActivity(intentBlendFilter);
@@ -253,7 +275,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     @Override
-    public void onItemSelected(AdapterView<?> parent, View v, int position, long id){
+    public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
         return;
     }
 

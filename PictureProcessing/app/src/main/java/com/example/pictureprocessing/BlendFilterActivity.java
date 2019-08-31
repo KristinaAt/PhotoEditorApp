@@ -19,7 +19,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.io.IOException;
 
 public class BlendFilterActivity extends AppCompatActivity {
-
+    //Creates instances of all the buttons and imageView in the design
     private FloatingActionButton savePhotoActionBtn, goBackBtn;
     private ImageView imageView;
     private Button blendWithBtn, undoBtn;
@@ -42,6 +42,9 @@ public class BlendFilterActivity extends AppCompatActivity {
         blendWithBtn = (Button) findViewById(R.id.blendWithBtn);
         undoBtn = (Button) findViewById(R.id.undoBtn);
 
+        /*Calls a helper function that saves a photo in a directory
+        of the phone using a given bitmap
+         */
         savePhotoActionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

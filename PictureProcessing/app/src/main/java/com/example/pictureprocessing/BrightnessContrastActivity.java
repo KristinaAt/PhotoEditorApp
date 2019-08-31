@@ -16,7 +16,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.security.spec.ECField;
 
 public class BrightnessContrastActivity extends AppCompatActivity {
-
+    //Creates instances of all the buttons, image view and the spinner in the design
     private FloatingActionButton savePhotoActionBtn, goBackBtn;
     private ImageView imageView;
     private SeekBar brightScale, contrastScale;
@@ -53,13 +53,13 @@ public class BrightnessContrastActivity extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
                 Bitmap tempImage = null;
                 double progress = seekBar.getProgress();
+                //Try catch block for copying the bitmap from the imageView
                 try {
                     tempImage = image.copy(Bitmap.Config.RGB_565, true);
                 } catch (Exception e) {
                     System.out.println("No photo selected");
                     return;
                 }
-
                 tempImage = com.example.pictureprocessing.Filters.AdjustBrightnessFilter.BrightnessFilter(tempImage, progress / 50);
                 imageView.setImageBitmap(tempImage);
             }
@@ -79,19 +79,23 @@ public class BrightnessContrastActivity extends AppCompatActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 Bitmap tempImage = null;
+                //Converts the progress into a number in the range [-255, 255]
                 int progress = seekBar.getProgress() - 255;
+                //Try catch block for copying the bitmap from the imageView
                 try {
                     tempImage = image.copy(Bitmap.Config.RGB_565, true);
                 } catch (Exception e) {
                     System.out.println("No photo selected");
                     return;
                 }
-
                 tempImage = com.example.pictureprocessing.Filters.ContrastFilter.ContrastFilter(tempImage, progress);
                 imageView.setImageBitmap(tempImage);
             }
         });
 
+        /*Calls a helper function that saves a photo in a directory
+        of the phone using a given bitmap
+        */
         savePhotoActionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,11 +103,13 @@ public class BrightnessContrastActivity extends AppCompatActivity {
             }
         });
 
+        //When the button is clicked the program goes to the main activity
         goBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(activity, MainActivity.class);
                 Bitmap bitmap = null;
+                //Try catch block for getting the bitmap from the imageView
                 try {
                     bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
                 } catch (Exception e) {
