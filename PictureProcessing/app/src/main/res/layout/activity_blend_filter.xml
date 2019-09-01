@@ -43,8 +43,11 @@
         android:layout_marginStart="349dp"
         android:layout_marginLeft="349dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="55dp"
+        android:layout_marginRight="55dp"
         android:clickable="true"
         app:backgroundTint="#03A9F4"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_menu_save" />
