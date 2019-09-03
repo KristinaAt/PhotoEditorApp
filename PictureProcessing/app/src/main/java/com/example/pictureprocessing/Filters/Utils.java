@@ -10,13 +10,27 @@ public class Utils {
         R = Math.min(R, 255);
         G = Math.min(G, 255);
         B = Math.min(B, 255);
-        img.setPixel(x, y, (R << 16) + (G << 8) + B);
+        img.setPixel(x, y, ((R << 16) + (G << 8) + B));
     }
 
     public static void setRG(int x,  int y, int R, int G, int RGB, Bitmap img){
         R = Math.min(R, 255);
         G = Math.min(G, 255);
         RGB = (R << 16) + (G << 8) + (RGB & 0xff);
+        img.setPixel(x, y, RGB);
+    }
+
+    public static void setGB(int x,  int y, int G, int B, int RGB, Bitmap img){
+        G = Math.min(G, 255);
+        B = Math.min(B, 255);
+        RGB = (RGB & 0xff0000) + (G << 8) + B;
+        img.setPixel(x, y, RGB);
+    }
+
+    public static void setRB(int x,  int y, int R, int B, int RGB, Bitmap img){
+        R = Math.min(R, 255);
+        B = Math.min(B, 255);
+        RGB = (R << 16) + (RGB & 0xff00) + B;
         img.setPixel(x, y, RGB);
     }
 
@@ -30,6 +44,7 @@ public class Utils {
     public static void setR(int x, int y, int R, int RGB, Bitmap img) {
         R = Math.min(R, 255);
         RGB = (RGB & 0x00ffff) + (R << 16);
+
         img.setPixel(x, y, RGB);
     }
 

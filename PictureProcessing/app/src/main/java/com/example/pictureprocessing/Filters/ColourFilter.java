@@ -55,66 +55,32 @@ public class ColourFilter {
     }
 
     public static void OrangeScalePixel(int x, int y, Bitmap img) {
-        int R = Utils.getR(x, y, img);
-        int G = Utils.getG(x, y, img);
-        int B = Utils.getB(x, y, img);
-        int newR = R + 100;
-        int newG = G + 60;
-        int newB = B + 20;
-        Utils.setR(x, y, newR, img);
-        Utils.setG(x, y, newG, img);
-        Utils.setB(x, y, newB, img);
+        int RGB = img.getPixel(x, y);
+        Utils.setRGB(x, y, Utils.getRfromRGB(RGB) + 100, Utils.getGfromRGB(RGB) + 60, Utils.getBfromRGB(RGB) + 20, img);
     }
 
     public static void PurpleScalePixel(int x, int y, Bitmap img) {
-        int R = Utils.getR(x, y, img);
-        int B = Utils.getB(x, y, img);
-        int newR = R + 60;
-        int newB = B + 100;
-        Utils.setR(x, y, newR, img);
-        Utils.setB(x, y, newB, img);
+        int RGB = img.getPixel(x, y);
+        Utils.setRB(x, y, Utils.getRfromRGB(RGB) + 60, Utils.getBfromRGB(RGB) + 100, RGB, img);
     }
 
     public static void PinkScalePixel(int x, int y, Bitmap img) {
-        int R = Utils.getR(x, y, img);
-        int B = Utils.getB(x, y, img);
-        int newR = R + 115;
-        int newB = B + 80;
-        Utils.setR(x, y, newR, img);
-        Utils.setB(x, y, newB, img);
+        int RGB = img.getPixel(x, y);
+        Utils.setRB(x, y, Utils.getRfromRGB(RGB) + 115, Utils.getBfromRGB(RGB) + 80, RGB, img);
     }
 
     public static void LimeScalePixel(int x, int y, Bitmap img) {
-        int R = Utils.getR(x, y, img);
-        int G = Utils.getG(x, y, img);
-        int B = Utils.getB(x, y, img);
-        int newR = R + 50;
-        int newG = G + 100;
-        int newB = B + 50;
-        Utils.setR(x, y, newR, img);
-        Utils.setG(x, y, newG, img);
-        Utils.setB(x, y, newB, img);
+        int RGB = img.getPixel(x, y);
+        Utils.setRGB(x, y, Utils.getRfromRGB(RGB) + 50, Utils.getGfromRGB(RGB) + 100, Utils.getBfromRGB(RGB) + 50, img);
     }
 
     public static void AquaScalePixel(int x, int y, Bitmap img) {
-        int G = Utils.getG(x, y, img);
-        int B = Utils.getB(x, y, img);
-        int newG = G + 100;
-        int newB = B + 100;
-        Utils.setG(x, y, newG, img);
-        Utils.setB(x, y, newB, img);
+        int RGB = img.getPixel(x, y);
+        Utils.setGB(x, y, Utils.getGfromRGB(RGB) + 100, Utils.getBfromRGB(RGB) + 100, RGB, img);
     }
 
     public static void WarmScalePixel(int x, int y, Bitmap img) {
-        int R = Utils.getR(x, y, img);
-        int G = Utils.getG(x, y, img);
-        int B = Utils.getB(x, y, img);
-        int newR = R + 100;
-        int newG = G + 80;
-        int newB = B + 60;
-        Utils.setR(x, y, newR, img);
-        Utils.setG(x, y, newG, img);
-        Utils.setB(x, y, newB, img);
+        int RGB = img.getPixel(x, y);
+        Utils.setRGB(x, y, Utils.getRfromRGB(RGB) + 100, Utils.getGfromRGB(RGB) + 80, Utils.getBfromRGB(RGB) + 60, img);
     }
-
 }

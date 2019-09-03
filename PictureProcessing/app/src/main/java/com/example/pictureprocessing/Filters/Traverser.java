@@ -10,11 +10,11 @@ public class Traverser implements Runnable {
     private int startRow;
     private int segmentHeight;
     private int filterNumber;
-    private Bitmap img;
+    private Bitmap img, imgTwo, blendedImg;
     private int colour;
     private double scale;
 
-    public Traverser(int width, int startRow, int segmentHeight, int filterNumber, Bitmap img){
+    public Traverser(int width, int startRow, int segmentHeight, int filterNumber, Bitmap img) {
         this.width = width;
         this.startRow = startRow;
         this.segmentHeight = segmentHeight;
@@ -22,31 +22,37 @@ public class Traverser implements Runnable {
         this.img = img;
     }
 
-    public Traverser(int width, int startRow, int segmentHeight, int filterNumber, int colour, Bitmap img){
+    public Traverser(int width, int startRow, int segmentHeight, int filterNumber, int colour, Bitmap img) {
         this(width, startRow, segmentHeight, filterNumber, img);
         this.colour = colour;
     }
 
-    public Traverser(int width, int startRow, int segmentHeight, int filterNumber, double scale, Bitmap img){
+    public Traverser(int width, int startRow, int segmentHeight, int filterNumber, Bitmap img, Bitmap imgTwo, Bitmap blendedImg) {
+        this(width, startRow, segmentHeight, filterNumber, img);
+        this.imgTwo = imgTwo;
+        this.blendedImg = blendedImg;
+    }
+
+    public Traverser(int width, int startRow, int segmentHeight, int filterNumber, double scale, Bitmap img) {
         this(width, startRow, segmentHeight, filterNumber, img);
         this.scale = scale;
     }
 
     @Override
     public void run() {
-        switch(filterNumber){
+        switch (filterNumber) {
             //InvertFilterCase
             case 0:
-                for(int i = 0; i < width; i++){
-                    for(int j = startRow; j < startRow + segmentHeight; j++){
+                for (int i = 0; i < width; i++) {
+                    for (int j = startRow; j < startRow + segmentHeight; j++) {
                         InvertFilter.InvertPixel(i, j, img);
                     }
                 }
                 break;
             //ColourScale Filter
             case 1:
-                for(int i = 0; i < width; i++){
-                    for(int j = startRow; j < startRow + segmentHeight; j++){
+                for (int i = 0; i < width; i++) {
+                    for (int j = startRow; j < startRow + segmentHeight; j++) {
                         switch (colour) {
                             case 0:
                                 RedScalePixel(i, j, img);
@@ -85,9 +91,16 @@ public class Traverser implements Runnable {
                 }
                 break;
             case 2:
-                for(int i = 0; i < width; i++){
-                    for(int j = startRow; j < startRow + segmentHeight; j++){
+                for (int i = 0; i < width; i++) {
+                    for (int j = startRow; j < startRow + segmentHeight; j++) {
                         AdjustBrightnessFilter.ScalePixel(i, j, scale, img);
+                    }
+                }
+                break;
+            case 3:
+                for (int i = 0; i < width; i++) {
+                    for (int j = 0; j < startRow + segmentHeight; j++) {
+                        BlendFilter.BlendPixel(i, j, img, imgTwo, blendedImg);
                     }
                 }
                 break;

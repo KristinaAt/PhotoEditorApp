@@ -12,15 +12,15 @@ public class AdjustBrightnessFilter {
   */
 
     public static Bitmap BrightnessFilter(Bitmap img, double scale){
-        int NumberOfThreads = 7;
+        int numberOfThreads = 7;
         int width = img.getWidth();
         int height = img.getHeight();
-        int segmentHeight = height / NumberOfThreads;
+        int segmentHeight = height / numberOfThreads;
         ArrayList<Thread> threads = new ArrayList<>();
-        for(int i = 0; i < NumberOfThreads; i++){
+        for(int i = 0; i < numberOfThreads; i++){
             Thread thread;
-            if(i == NumberOfThreads - 1){
-                thread = new Thread(new Traverser(width, i*segmentHeight, height - (NumberOfThreads - 1)*segmentHeight,2, scale, img));
+            if(i == numberOfThreads - 1){
+                thread = new Thread(new Traverser(width, i*segmentHeight, height - (numberOfThreads - 1)*segmentHeight,2, scale, img));
             } else{
                 thread = new Thread(new Traverser(width, i*segmentHeight, segmentHeight,2, scale, img));
             }
@@ -28,7 +28,7 @@ public class AdjustBrightnessFilter {
             thread.start();
         }
 
-        for(int i = 0; i < NumberOfThreads; i++){
+        for(int i = 0; i < numberOfThreads; i++){
             try{
                 threads.get(i).join();
             } catch (Exception e){
