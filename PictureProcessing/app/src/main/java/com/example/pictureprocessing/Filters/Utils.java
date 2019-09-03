@@ -36,19 +36,31 @@ public class Utils {
      using bitwise masks with the bitwise and operator
    */
 
+    public static int getRfromRGB(int RGB) {
+        return ((RGB >> 16) & 0xff);
+    }
+
+    public static int getGfromRGB(int RGB) {
+        return ((RGB >> 8) & 0xff);
+    }
+
+    public static int getBfromRGB(int RGB) {
+        return (RGB & 0xff);
+    }
+
     public static int getR(int x, int y, Bitmap img) {
-        int ARGB = img.getPixel(x, y);
-        return ((ARGB >> 16) & 0xff);
+        int RGB = img.getPixel(x, y);
+        return ((RGB >> 16) & 0xff);
     }
 
     public static int getG(int x, int y, Bitmap img) {
-        int ARGB = img.getPixel(x, y);
-        return ((ARGB >> 8) & 0xff);
+        int RGB = img.getPixel(x, y);
+        return ((RGB >> 8) & 0xff);
     }
 
     public static int getB(int x, int y, Bitmap img) {
-        int ARGB = img.getPixel(x, y);
-        return (ARGB & 0xff);
+        int RGB = img.getPixel(x, y);
+        return (RGB & 0xff);
     }
 
     /* Helper method to check that a given pixel is within the scope and range of the

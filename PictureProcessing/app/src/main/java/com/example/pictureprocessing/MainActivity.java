@@ -255,7 +255,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             case 5:
                 //Adds the image which is to be filtered to the BrightnessContrastActivity intent
                 Intent intentBrightness = new Intent(activity, BrightnessContrastActivity.class);
-                DefaultCommands.addBitmapToIntent(intentBrightness, bitmap);
+                String filePath = DefaultCommands.saveImage(bitmap, this);
+                intentBrightness.putExtra("filePath", filePath);
+                //DefaultCommands.addBitmapToIntent(intentBrightness, bitmap);
                 startActivity(intentBrightness);
                 return;
             case 6:

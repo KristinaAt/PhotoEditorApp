@@ -2,28 +2,40 @@ package com.example.pictureprocessing.Filters;
 
 import android.graphics.Bitmap;
 
+import java.util.ArrayList;
+
 public class InvertFilter {
 
     //A function that inverts the colours of an image
     public static Bitmap InvertFilter(Bitmap img){
+        int NumberOfThreads = 16;
         int width = img.getWidth();
         int height = img.getHeight();
-        for(int i = 0; i < width; i++){
-            for(int j = 0; j < height; j++){
-                InvertPixel(i, j, img);
+        int segmentHeight = (int) height / NumberOfThreads;
+        ArrayList<Thread> threads = new ArrayList<>();
+        for(int i = 0; i < NumberOfThreads; i++){
+            Thread thread;
+            if(i == NumberOfThreads - 1){
+                thread = new Thread(new Traverser(width, i*segmentHeight, height - (NumberOfThreads - 1) *segmentHeight, 0, img));
+            } else {
+                thread = new Thread(new Traverser(width, i*segmentHeight, segmentHeight, 0, img));
+            }
+            threads.add(thread);
+            thread.start();
+        }
+
+        for(int i = 0; i < NumberOfThreads; i++){
+            try{
+                threads.get(i).join();
+            }catch (InterruptedException e){
+                System.out.println("Error starting thread");
             }
         }
         return img;
     }
 
     //Helper function for inverting the RGB values of a single pixel
-    private static void InvertPixel(int x, int y, Bitmap img){
-        int R = Utils.getR(x, y, img);
-        int G = Utils.getG(x, y, img);
-        int B = Utils.getB(x, y, img);
-
-        Utils.setR(x, y, 255 - R, img);
-        Utils.setG(x, y, 255 - G, img);
-        Utils.setB(x, y, 255 - B, img);
+    public static void InvertPixel(int x, int y, Bitmap img){
+        img.setPixel(x, y, 0xffffff - img.getPixel(x, y));
     }
 }

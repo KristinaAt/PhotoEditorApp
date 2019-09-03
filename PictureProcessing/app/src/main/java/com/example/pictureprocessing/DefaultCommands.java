@@ -36,10 +36,10 @@ public class DefaultCommands {
     //Sets the name for the directory where the images will be saved
     private static final String IMAGE_DIRECTORY = "/tempImages";
     //Constants for dealing with magic numbers
-    private static int QUALITY = 100;
+    private static int QUALITY = 25;
 
     //Saves a photo in a directory of the phone using a given bitmap
-    public static void saveImage(Bitmap bitmap, Context context) {
+    public static String saveImage(Bitmap bitmap, Context context) {
         //Compresses the given bitmap to a bytestream
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, QUALITY, bytes);
@@ -48,7 +48,7 @@ public class DefaultCommands {
         if (!wallpaperDirectory.exists()) {
             wallpaperDirectory.mkdirs();
         }
-
+        String filePath ="";
         try {
             //Creates a file whose name is based on the current date and time and has extension .jpg
             File file = new File(wallpaperDirectory, "IMG-" + Calendar.getInstance().getTimeInMillis() + ".jpg");
@@ -59,6 +59,7 @@ public class DefaultCommands {
             //Scans the file and makes it visible in the phone media
             MediaScannerConnection.scanFile(context, new String[]{file.getPath()},
                     new String[]{"image/jpeg"}, null);
+            filePath = file.getPath();
             fo.close();
             //Adds to the log the information that we have saved the photo
             Log.d("TAG", "File Saved::---&gt;" + file.getAbsolutePath());
@@ -66,6 +67,7 @@ public class DefaultCommands {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return filePath;
     }
 
     //Requests the user for multiple permissions for accessing its gallery and camera
