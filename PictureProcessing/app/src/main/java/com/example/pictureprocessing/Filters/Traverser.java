@@ -99,8 +99,15 @@ public class Traverser implements Runnable {
                 break;
             case 3:
                 for (int i = 0; i < width; i++) {
-                    for (int j = 0; j < startRow + segmentHeight; j++) {
+                    for (int j = startRow; j < startRow + segmentHeight; j++) {
                         BlendFilter.BlendPixel(i, j, img, imgTwo, blendedImg);
+                    }
+                }
+                break;
+            case 4:
+                for(int i = 0; i < width; i++){
+                    for(int j = startRow; j < startRow + segmentHeight; j++){
+                        ContrastFilter.adjustContrast(i, j, img, scale);
                     }
                 }
                 break;
