@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.io.File;
 
 public class ColourScaleActivity extends AppCompatActivity implements View.OnClickListener {
     //Creates instances of all the buttons and image view in the design
@@ -119,7 +122,8 @@ public class ColourScaleActivity extends AppCompatActivity implements View.OnCli
                 } catch (Exception e) {
                     System.out.println("No photo selected");
                 }
-                DefaultCommands.addBitmapToIntent(intent, bitmap);
+                String filepath = DefaultCommands.saveImage(bitmap, activity);
+                intent.putExtra("filePath", filepath);
                 startActivity(intent);
             }
         });
@@ -127,9 +131,13 @@ public class ColourScaleActivity extends AppCompatActivity implements View.OnCli
         //Set the imageView of the current activity to the image from the main activity
         Bitmap bitmap = null;
         try {
-            bitmap = DefaultCommands.getImageFromIntent(activity.getIntent());
+            File file = new File(activity.getIntent().getStringExtra("filePath"));
+            if(file.exists()){
+                bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+            }
             image = bitmap;
             imageView.setImageBitmap(bitmap);
+            file.delete();
         } catch (Exception e) {
             System.out.println("No photo found!");
         }

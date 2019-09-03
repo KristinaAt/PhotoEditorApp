@@ -123,21 +123,11 @@ public class BrightnessContrastActivity extends AppCompatActivity {
                 }
                 String filePath = DefaultCommands.saveImage(bitmap, activity);
                 intent.putExtra("filePath", filePath);
-                //DefaultCommands.addBitmapToIntent(intent, bitmap);
                 startActivity(intent);
             }
         });
 
         //Set the imageView of the current activity to the image from the main activity
-        /*Bitmap bitmap = null;
-        try {
-            bitmap = DefaultCommands.getImageFromIntent(this.getIntent());
-            image = bitmap;
-            imageView.setImageBitmap(bitmap);
-        } catch (Exception e) {
-            System.out.println("No photo found!");
-        }*/
-
         try {
             Bitmap bitmap = null;
             File imgFile = new File(this.getIntent().getStringExtra("filePath"));

@@ -243,7 +243,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             System.out.println("No photo source selected");
             return;
         }
-        //Switch case for filtering the image base on the option selected from the drop down menu
+        //Switch case for filtering the image base on the option selected from the drop down menu4
+        String filePath = "";
         switch (position) {
             case 1:
                 result = PixelArtFilter.PixelArtFilter(result);
@@ -260,21 +261,22 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             case 5:
                 //Adds the image which is to be filtered to the BrightnessContrastActivity intent
                 Intent intentBrightness = new Intent(activity, BrightnessContrastActivity.class);
-                String filePath = DefaultCommands.saveImage(bitmap, this);
+                filePath = DefaultCommands.saveImage(bitmap, this);
                 intentBrightness.putExtra("filePath", filePath);
-                //DefaultCommands.addBitmapToIntent(intentBrightness, bitmap);
                 startActivity(intentBrightness);
                 return;
             case 6:
                 //Adds the image which is to be filtered to the ColourScaleActivity intent
                 Intent intentColourFilter = new Intent(activity, ColourScaleActivity.class);
-                DefaultCommands.addBitmapToIntent(intentColourFilter, bitmap);
+                filePath = DefaultCommands.saveImage(bitmap, this);
+                intentColourFilter.putExtra("filePath", filePath);
                 startActivity(intentColourFilter);
                 return;
             case 7:
                 //Adds the image which is to be filtered to the BlendFilterActivity intent
                 Intent intentBlendFilter = new Intent(activity, BlendFilterActivity.class);
-                DefaultCommands.addBitmapToIntent(intentBlendFilter, bitmap);
+                filePath = DefaultCommands.saveImage(bitmap, this);
+                intentBlendFilter.putExtra("filePath", filePath);
                 startActivity(intentBlendFilter);
                 return;
             default:

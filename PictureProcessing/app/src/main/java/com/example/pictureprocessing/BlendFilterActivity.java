@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.File;
 import java.io.IOException;
 
 public class BlendFilterActivity extends AppCompatActivity {
@@ -62,7 +64,8 @@ public class BlendFilterActivity extends AppCompatActivity {
                 } catch (Exception e){
                     System.out.println("No photo selected");
                 }
-                DefaultCommands.addBitmapToIntent(intent, bitmap);
+                String filePath = DefaultCommands.saveImage(bitmap, activity);
+                intent.putExtra("filePath", filePath);
                 startActivity(intent);
             }
         });
@@ -84,9 +87,13 @@ public class BlendFilterActivity extends AppCompatActivity {
         //Set the imageView of the current activity to the image from the main activity
         Bitmap bitmap = null;
         try{
-            bitmap = DefaultCommands.getImageFromIntent(this.getIntent());
+            File file = new File(activity.getIntent().getStringExtra("filePath"));
+            if(file.exists()){
+                bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+            }
             image = bitmap;
             imageView.setImageBitmap(bitmap);
+            file.delete();
         } catch (Exception e){
             System.out.println("No photo found!");
         }
