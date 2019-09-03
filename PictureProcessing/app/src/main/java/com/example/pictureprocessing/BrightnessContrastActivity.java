@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -119,7 +121,9 @@ public class BrightnessContrastActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     System.out.println("No photo selected");
                 }
-                DefaultCommands.addBitmapToIntent(intent, bitmap);
+                String filePath = DefaultCommands.saveImage(bitmap, activity);
+                intent.putExtra("filePath", filePath);
+                //DefaultCommands.addBitmapToIntent(intent, bitmap);
                 startActivity(intent);
             }
         });

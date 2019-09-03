@@ -35,31 +35,23 @@ public class ColourFilter {
     }
 
     public static void RedScalePixel(int x, int y, Bitmap img) {
-        int R = Utils.getR(x, y, img);
-        int newR = R + 100;
-        Utils.setR(x, y, newR, img);
+        int RGB = img.getPixel(x, y);
+        Utils.setR(x, y, Utils.getRfromRGB(RGB) + 100, RGB, img);
     }
 
     public static void BlueScalePixel(int x, int y, Bitmap img) {
-        int B = Utils.getB(x, y, img);
-        int newB = B + 100;
-        Utils.setB(x, y, newB, img);
+        int RGB = img.getPixel(x, y);
+        Utils.setB(x, y, Utils.getBfromRGB(RGB) + 100, RGB, img);
     }
 
     public static void GreenScalePixel(int x, int y, Bitmap img) {
-        int G = Utils.getG(x, y, img);
-        int newG = G + 100;
-        Utils.setG(x, y, newG, img);
+        int RGB = img.getPixel(x, y);
+        Utils.setG(x, y, Utils.getGfromRGB(RGB) + 100, RGB, img);
     }
 
     public static void YellowScalePixel(int x, int y, Bitmap img) {
-        int R = Utils.getR(x, y, img);
-        int G = Utils.getG(x, y, img);
-        int newR = R + 50;
-        int newG = G + 50;
-        Utils.setR(x, y, newR, img);
-        Utils.setG(x, y, newG, img);
-        //Utils.setRGB(x, y, newR, newG, Utils.getB(x, y, img), img);
+        int RGB = img.getPixel(x, y);
+        Utils.setRG(x, y, Utils.getRfromRGB(RGB) + 50, Utils.getGfromRGB(RGB) + 50, RGB, img);
     }
 
     public static void OrangeScalePixel(int x, int y, Bitmap img) {

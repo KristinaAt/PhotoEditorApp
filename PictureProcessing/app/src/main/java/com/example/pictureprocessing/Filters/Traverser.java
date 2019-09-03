@@ -12,6 +12,7 @@ public class Traverser implements Runnable {
     private int filterNumber;
     private Bitmap img;
     private int colour;
+    private double scale;
 
     public Traverser(int width, int startRow, int segmentHeight, int filterNumber, Bitmap img){
         this.width = width;
@@ -26,6 +27,11 @@ public class Traverser implements Runnable {
         this.colour = colour;
     }
 
+    public Traverser(int width, int startRow, int segmentHeight, int filterNumber, double scale, Bitmap img){
+        this(width, startRow, segmentHeight, filterNumber, img);
+        this.scale = scale;
+    }
+
     @Override
     public void run() {
         switch(filterNumber){
@@ -37,6 +43,7 @@ public class Traverser implements Runnable {
                     }
                 }
                 break;
+            //ColourScale Filter
             case 1:
                 for(int i = 0; i < width; i++){
                     for(int j = startRow; j < startRow + segmentHeight; j++){
@@ -77,7 +84,13 @@ public class Traverser implements Runnable {
                     }
                 }
                 break;
-
+            case 2:
+                for(int i = 0; i < width; i++){
+                    for(int j = startRow; j < startRow + segmentHeight; j++){
+                        AdjustBrightnessFilter.ScalePixel(i, j, scale, img);
+                    }
+                }
+                break;
             default:
                 return;
         }

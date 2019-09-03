@@ -2,6 +2,8 @@ package com.example.pictureprocessing.Filters;
 
 import android.graphics.Bitmap;
 
+import java.util.ArrayList;
+
 public class AdjustBrightnessFilter {
 
   /* Brightness filter takes an image and based on the scale brightens or darkens
@@ -10,11 +12,26 @@ public class AdjustBrightnessFilter {
   */
 
     public static Bitmap BrightnessFilter(Bitmap img, double scale){
+        int NumberOfThreads = 7;
         int width = img.getWidth();
         int height = img.getHeight();
-        for(int i = 0; i < width; i++){
-            for(int j = 0; j < height; j++){
-                ScalePixel(i, j, scale, img);
+        int segmentHeight = height / NumberOfThreads;
+        ArrayList<Thread> threads = new ArrayList<>();
+        for(int i = 0; i < NumberOfThreads; i++){
+            Thread thread;
+            if(i == NumberOfThreads - 1){
+                thread = new Thread(new Traverser(width, i*segmentHeight, height - (NumberOfThreads - 1)*segmentHeight,2, scale, img));
+            } else{
+                thread = new Thread(new Traverser(width, i*segmentHeight, segmentHeight,2, scale, img));
+            }
+            threads.add(thread);
+            thread.start();
+        }
+
+        for(int i = 0; i < NumberOfThreads; i++){
+            try{
+                threads.get(i).join();
+            } catch (Exception e){
             }
         }
         return img;
@@ -25,30 +42,10 @@ public class AdjustBrightnessFilter {
        scale unless it is going to overflow.
      */
     public static void ScalePixel(int x, int y, double scale, Bitmap img){
-        int R = Utils.getR(x, y, img);
-        int G = Utils.getG(x, y, img);
-        int B = Utils.getB(x, y, img);
-
-        int newR = (int) (R * scale);
-        int newG = (int) (G * scale);
-        int newB = (int) (B * scale);
-
-        if(newR > 255){
-            Utils.setR(x, y,255, img);
-        } else {
-            Utils.setR(x, y, newR, img);
-        }
-
-        if(newG > 255){
-            Utils.setG(x, y,255, img);
-        } else {
-            Utils.setG(x, y, newG, img);
-        }
-
-        if(newB > 255){
-            Utils.setB(x, y,255, img);
-        } else {
-            Utils.setB(x, y, newB, img);
-        }
+        int RGB = img.getPixel(x, y);
+        int newR = (int) (Utils.getRfromRGB(RGB)*scale);
+        int newG = (int) (Utils.getGfromRGB(RGB)*scale);
+        int newB = (int) (Utils.getBfromRGB(RGB)*scale);
+        Utils.setRGB(x, y, newR, newG, newB, img);
     }
 }

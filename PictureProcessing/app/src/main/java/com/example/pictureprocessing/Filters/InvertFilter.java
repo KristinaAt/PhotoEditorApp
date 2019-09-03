@@ -8,7 +8,7 @@ public class InvertFilter {
 
     //A function that inverts the colours of an image
     public static Bitmap InvertFilter(Bitmap img){
-        int NumberOfThreads = 16;
+        int NumberOfThreads = 7;
         int width = img.getWidth();
         int height = img.getHeight();
         int segmentHeight = (int) height / NumberOfThreads;
